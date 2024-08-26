@@ -31,7 +31,7 @@ export default function CoinElement() {
         }));
         return;
       }
-      const [res] = await flipCoin(gameState.betAmount, gameState.choice);
+      const [res, tx] = await flipCoin(gameState.betAmount, gameState.choice);
       console.log(res);
 
       setEffect(true);
@@ -42,6 +42,7 @@ export default function CoinElement() {
         isFlipping: false,
         message: gameState.choice == res ? "You won !" : "You loss !",
       }));
+      await tx.wait();
     } catch (error) {
       setGameState((prevState) => ({
         ...prevState,

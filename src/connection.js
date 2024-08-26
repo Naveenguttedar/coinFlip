@@ -128,15 +128,13 @@ export const connectWallet = async () => {
 
 export async function flipCoin(betAmount, choice) {
   if (contract == null) {
-    return "No result Something went wrong with contract connection";
+    return ["No result", "Something went wrong with contract connection"];
   }
   const bet = parseUnits(betAmount, "ether");
   const tx = await contract.flipCoin(choice === "Heads", {
     value: bet,
   });
-  await tx.wait();
-
   const result = await contract.getLastFlipResult();
   const msg = "";
-  return result;
+  return [result, tx];
 }
