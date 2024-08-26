@@ -3,15 +3,15 @@ import { useStateContext } from "../Context";
 export default function BtnConnect() {
   const { state, dispatch } = useStateContext();
   const handleClick = async () => {
-    console.log("dispatched ");
     const wallet = await connectWallet();
-    console.log(wallet);
-    dispatch({
-      type: "ALERT",
-      view: true,
-      msg: "Congratulations! Account connected successfully ",
-      msgType: "Success",
-    });
+    if (wallet?.isWalletConnected) {
+      dispatch({
+        type: "ALERT",
+        view: true,
+        msg: "Congratulations! Account connected successfully ",
+        msgType: "Success",
+      });
+    }
     dispatch({
       type: "WALLET_CONNECTION",
       walletConnected: wallet?.isWalletConnected,
