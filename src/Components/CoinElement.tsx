@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useStateContext } from "../Context";
+import BtnConnect from "./btnConnect";
 type Sides = "Heads" | "Tails";
 export default function CoinElement() {
   const [side, setSide] = useState<Sides>("Heads");
@@ -14,8 +15,9 @@ export default function CoinElement() {
     return Math.floor(Math.random() * (2 - 1 + 1)) + 1;
   };
   const { state } = useStateContext();
-  const message = false,
-    lastFlipResult = "Heads";
+
+  const message = "",
+    lastFlipResult = side;
   console.log(state);
   const [betAmount, setBetAmount] = useState("");
   const [choice, setChoice] = useState("heads");
@@ -36,9 +38,18 @@ export default function CoinElement() {
         </h1>
 
         {!state.connection.walletConnected ? (
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-            Connect Wallet
-          </button>
+          <>
+            <h1 className="text-xl text-red-800">Connect to MetaMask</h1>
+            <h2 className="text-lg py-1">How to play?</h2>
+            <ul className="py-2 list-disc pl-4 ">
+              <li>Connect to your Ethereum wallet (MetaMask compatible)</li>
+              <li>Place a bet using SepoliaETH</li>
+              <li>Select heads or tails</li>
+              <li> If you guess correctly, you double your bet amount!</li>
+            </ul>
+
+            <BtnConnect />
+          </>
         ) : (
           <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <div className="mb-6">
